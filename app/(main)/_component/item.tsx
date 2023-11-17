@@ -73,7 +73,7 @@ const Item = ({
       if (!expanded) {
         onExpand?.();
       }
-      // router.push(`/documents/${documentID}`);
+      router.push(`/documents/${documentID}`);
     });
 
     toast.promise(promise, {
@@ -86,7 +86,7 @@ const Item = ({
   const onArchieve = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
     if (!id) return;
-    const promise = archieved({ id });
+    const promise = archieved({ id }).then(() => router.push(`/documents}`));
     toast.promise(promise, {
       loading: "Moving the note to trash",
       success: "Note deleted succesfull",
@@ -122,7 +122,7 @@ const Item = ({
         {documentIcon ? (
           <div className="shrink-0 h-[18px] mr-2 "> {documentIcon}</div>
         ) : (
-          <Icon className="shrink-0 h-[18px] text-muted-foreground mr-2" />
+          <Icon className="shrink-0 h-[18px] w-[18px] text-muted-foreground mr-2" />
         )}
         <span className="truncate">{label}</span>
 

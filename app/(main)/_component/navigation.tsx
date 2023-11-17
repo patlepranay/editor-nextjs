@@ -11,7 +11,7 @@ import {
   Trash,
   UserIcon,
 } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 
 import { useMediaQuery } from "usehooks-ts";
@@ -21,11 +21,16 @@ import { api } from "@/convex/_generated/api";
 import Item from "./item";
 import { toast } from "sonner";
 import DocumentList from "./document-list";
-import { Popover, PopoverTrigger ,PopoverContent} from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
 
 import TrashBox from "./trashbox";
 import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-settings";
+import Navbar from "./navbar";
 
 const Navigation = () => {
   const pathName = usePathname();
@@ -41,8 +46,11 @@ const Navigation = () => {
   const [isResetting, setisResetting] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(isMobile);
 
-  const search=useSearch();
-  const settings=useSettings();
+  const params = useParams();
+
+  const search = useSearch();
+  const settings = useSettings();
+  const router = useRouter();
 
   useEffect(() => {
     if (isMobile) {
@@ -122,7 +130,9 @@ const Navigation = () => {
   };
 
   const handleCreate = () => {
-    const promise = create({ title: "Untitled" });
+    const promise = create({ title: "Untitled" }).then((documentID) =>
+      router.push(`/documents/${documentID}`)
+    );
     toast.promise(promise, {
       loading: "Creating a new note",
       success: "New note created",
@@ -168,7 +178,7 @@ const Navigation = () => {
               className="p-0 w-72 "
               side={isMobile ? "bottom" : "right"}
             >
-             <TrashBox/>
+              <TrashBox />
             </PopoverContent>
           </Popover>
         </div>
@@ -187,15 +197,19 @@ const Navigation = () => {
           isMobile && "left-0 w-full"
         )}
       >
-        <nav className="bg-transparent px-3 py-2 w-full">
-          {isCollapsed && (
-            <MenuIcon
-              role="button"
-              onClick={resetWidth}
-              className="h-6 w-6 text-muted-foreground "
-            />
-          )}
-        </nav>
+        {!!params.documentID ? (
+          <Navbar isCollapsed={isCollapsed} onResetWidth={resetWidth} />
+        ) : (
+          <nav className="bg-transparent px-3 py-2 w-full">
+            {isCollapsed && (
+              <MenuIcon
+                role="button"
+                onClick={resetWidth}
+                className="h-6 w-6 text-muted-foreground "
+              />
+            )}
+          </nav>
+        )}
       </div>
     </>
   );
