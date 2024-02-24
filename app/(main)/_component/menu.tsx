@@ -28,9 +28,9 @@ const Menu = ({ documentID }: MenuProps) => {
   const onArchieve = () => {
     const promise = archieve({ id: documentID });
     toast.promise(promise, {
-      loading: "Moving note to trash...",
+      loading: "Moving article to trash...",
       success: "Moved to trash",
-      error: "Failed to archieve note",
+      error: "Failed to archieve article",
     });
 
     router.push("/documents");

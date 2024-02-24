@@ -65,7 +65,7 @@ const ToolBar = ({ initialData, preview }: ToolBarProps) => {
     removeIcon({id:initialData._id})
   }
   return (
-    <div className="pl-[54px] group relative">
+    <div className="pl-[54px] group relative bg-neutral-950">
       {!!initialData.icon && !preview && (
         <div className="flex items-center gap-x-2 group/icon pt-6">
           <IconPicker onChange={onIconSelect}>

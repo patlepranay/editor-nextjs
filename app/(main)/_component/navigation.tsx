@@ -134,9 +134,9 @@ const Navigation = () => {
       router.push(`/documents/${documentID}`)
     );
     toast.promise(promise, {
-      loading: "Creating a new note",
-      success: "New note created",
-      error: "Failed to create note",
+      loading: "Creating a new article",
+      success: "New article created",
+      error: "Failed to create article",
     });
   };
 
@@ -145,7 +145,7 @@ const Navigation = () => {
       <aside
         ref={sideBarRef}
         className={cn(
-          "group/sidebar h-full bg-secondary overflow-y-auto relative flex w-60 flex-col z-[99999]",
+          "group/sidebar h-full  overflow-y-auto relative flex w-60 flex-col z-[99999]",
           isResetting && "transition-all ease-in-out duration-300",
           isMobile && "w-0"
         )}
@@ -160,33 +160,45 @@ const Navigation = () => {
         >
           <ChevronsLeft className="h-6 w-6 " />
         </div>
-        <div>
-          <UserItem />
-          <Item label="Search" icon={Search} onClick={search.onOpen} isSearch />
-          <Item label="Settings" icon={Settings} onClick={settings.onOpen} />
-          <Item onClick={handleCreate} label="New Item" icon={PlusCircle} />
+        <div className="flex flex-col justify-between h-full">
+          <div>
+            <UserItem />
+            <Item
+              label="Search"
+              icon={Search}
+              onClick={search.onOpen}
+              isSearch
+            />
+          </div>
+          <div className="mt-4 ">
+            {/* render documents here */}
+            <DocumentList />
+            <Item onClick={handleCreate} label="Add a article" icon={Plus} />
+            <Item label="Settings" icon={Settings} onClick={settings.onOpen} />
+            <Item onClick={handleCreate} label="New Item" icon={PlusCircle} />
+            <Popover>
+              <PopoverTrigger className="w-full mt-4">
+                <Item
+                  label="Deleted Articles"
+                  icon={Trash}
+                  onClick={() => {}}
+                />
+              </PopoverTrigger>
+              <PopoverContent
+                className="p-0 w-72 "
+                side={isMobile ? "bottom" : "right"}
+              >
+                <TrashBox />
+              </PopoverContent>
+            </Popover>
+          </div>
         </div>
-        <div className="mt-4 ">
-          {/* render documents here */}
-          <DocumentList />
-          <Item onClick={handleCreate} label="Add a page" icon={Plus} />
-          <Popover>
-            <PopoverTrigger className="w-full mt-4">
-              <Item label="Trash" icon={Trash} onClick={() => {}} />
-            </PopoverTrigger>
-            <PopoverContent
-              className="p-0 w-72 "
-              side={isMobile ? "bottom" : "right"}
-            >
-              <TrashBox />
-            </PopoverContent>
-          </Popover>
-        </div>
+
         {/* this is separator to change size of sidebar  */}
         <div
           onMouseDown={handleMouseDown}
           onClick={resetWidth}
-          className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary right-0 top-0"
+          className=" bg-stone-900  group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 right-0 top-0"
         />
       </aside>
       <div

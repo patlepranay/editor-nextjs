@@ -40,9 +40,9 @@ const TrashBox = () => {
     const promise = restore({ id: documentID });
 
     toast.promise(promise, {
-      loading: "Restoring Notes",
-      success: "Note restored",
-      error: "Error in restoring notes",
+      loading: "Restoring Article",
+      success: "Article restored",
+      error: "Error in restoring Article",
     });
   };
 
@@ -50,9 +50,9 @@ const TrashBox = () => {
     const promise = remove({ id: documentID });
 
     toast.promise(promise, {
-      loading: "Deleting Notes",
-      success: "Note deleted",
-      error: "Error in deleting notes",
+      loading: "Deleting Article",
+      success: "Article deleted",
+      error: "Error in deleting Article",
     });
 
     if (params.documentID === documentID) router.push("/documents");

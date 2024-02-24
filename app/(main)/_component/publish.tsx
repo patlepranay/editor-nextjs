@@ -35,9 +35,9 @@ const Publish = ({ initialData }: PublishProps) => {
     }).finally(() => setSubmitting(false));
 
     toast.promise(promise, {
-      loading: "Publishing note",
-      success: "Note published succesfully",
-      error: "Failed to publish note",
+      loading: "Publishing article",
+      success: "Article published succesfully",
+      error: "Failed to publish article",
     });
   };
   const onCopy = () => {
